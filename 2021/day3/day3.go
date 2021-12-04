@@ -11,7 +11,7 @@ import (
 var input string
 
 func main() {
-	// partA()
+	partA()
 	partB()
 }
 
