@@ -69,3 +69,29 @@ func TestPartB_Big(t *testing.T) {
 		t.Errorf("expected %d but %d calculated", expected, calc)
 	}
 }
+
+var calc int
+
+func BenchmarkPartB_Big(b *testing.B) {
+	matrix := make([][]int, 1000)
+	for i := 0; i < 1000; i++ {
+		matrix[i] = make([]int, 1000)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		calc = partB(input1, matrix)
+	}
+}
+
+func BenchmarkPartA_Big(b *testing.B) {
+	matrix := make([][]int, 1000)
+	for i := 0; i < 1000; i++ {
+		matrix[i] = make([]int, 1000)
+	}
+
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		calc = partA(input1, matrix)
+	}
+}
