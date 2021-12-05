@@ -1,0 +1,2 @@
+PASS
+ok  	github.com/bkielbasa/adventofcode/2021/day5	0.712s
