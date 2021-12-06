@@ -4,7 +4,6 @@ import (
 	"bufio"
 	_ "embed"
 	"fmt"
-	"log"
 	"strconv"
 	"strings"
 )
@@ -12,14 +11,15 @@ import (
 //go:embed day4.txt
 var input string
 
-type board [5][5]int
+type board [5][5]string
 
 func (b *board) sum() int {
 	sum := 0
 	for x := range b {
 		for y := range b[x] {
-			if b[x][y] != -1 {
-				sum += b[x][y]
+			if b[x][y] != "-1" {
+				s, _ := strconv.Atoi(b[x][y])
+				sum += s
 			}
 		}
 	}
@@ -27,11 +27,11 @@ func (b *board) sum() int {
 	return sum
 }
 
-func (b *board) markNumber(n int) {
+func (b *board) markNumber(n string) {
 	for x := range b {
 		for y := range b[x] {
 			if b[x][y] == n {
-				b[x][y] = -1
+				b[x][y] = "-1"
 			}
 		}
 	}
@@ -41,7 +41,7 @@ func (b *board) hasBingo() bool {
 	for x := range b {
 		c := 0
 		for y := range b[x] {
-			if b[x][y] == -1 {
+			if b[x][y] == "-1" {
 				c++
 			}
 		}
@@ -55,7 +55,7 @@ func (b *board) hasBingo() bool {
 		c := 0
 
 		for x := range b {
-			if b[x][y] == -1 {
+			if b[x][y] == "-1" {
 				c++
 			}
 		}
@@ -69,34 +69,38 @@ func (b *board) hasBingo() bool {
 }
 
 func main() {
-	partA()
-	partB()
+	fmt.Println(partA())
+	fmt.Println(partB())
 }
 
-func partA() {
+func partA() int {
+	noOfBoards := (len(strings.Split(input, "\n")) - 1) / 6
 	input := strings.NewReader(input)
 	scanner := bufio.NewScanner(input)
 	scanner.Scan()
-	numbers := stringsToInts(strings.Split(scanner.Text(), ","))
-	boards := readBoards(scanner)
+	numbers := strings.Split(scanner.Text(), ",")
+	boards := readBoards(scanner, noOfBoards)
 
 	for _, n := range numbers {
 		for i := range boards {
 			boards[i].markNumber(n)
 			if boards[i].hasBingo() {
-				fmt.Printf("BINGO! : %v\n, sum: %d\n", boards[i], n*boards[i].sum())
-				return
+				d, _ := strconv.Atoi(n)
+				return d * boards[i].sum()
 			}
 		}
 	}
+
+	return 0
 }
 
-func partB() {
+func partB() int {
+	noOfBoards := (len(strings.Split(input, "\n")) - 1) / 6
 	input := strings.NewReader(input)
 	scanner := bufio.NewScanner(input)
 	scanner.Scan()
-	numbers := stringsToInts(strings.Split(scanner.Text(), ","))
-	boards := readBoards(scanner)
+	numbers := strings.Split(scanner.Text(), ",")
+	boards := readBoards(scanner, noOfBoards)
 
 	alreadyWon := []int{}
 	allBoards := len(boards)
@@ -110,15 +114,18 @@ func partB() {
 			if boards[i].hasBingo() {
 				alreadyWon = append(alreadyWon, i)
 				if len(alreadyWon) == allBoards {
-					fmt.Printf("Last BINGO! : %v\n, sum: %d\n", boards[i], n*boards[i].sum())
+					s, _ := strconv.Atoi(n)
+					return s * boards[i].sum()
 				}
 			}
 		}
 	}
+
+	return 0
 }
 
-func readBoards(scanner *bufio.Scanner) []board {
-	boards := []board{}
+func readBoards(scanner *bufio.Scanner, max int) []board {
+	boards := make([]board, max)
 
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -127,12 +134,12 @@ func readBoards(scanner *bufio.Scanner) []board {
 		}
 
 		b := board{}
-		b[0] = stringsToInts5(strings.Split(line, " "))
+		b[0] = strings5(strings.Split(line, " "))
 
 		for i := 1; i < 5; i++ {
 			scanner.Scan()
 			line := scanner.Text()
-			b[i] = stringsToInts5(strings.Split(line, " "))
+			b[i] = strings5(strings.Split(line, " "))
 		}
 
 		boards = append(boards, b)
@@ -141,33 +148,16 @@ func readBoards(scanner *bufio.Scanner) []board {
 	return boards
 }
 
-func stringsToInts5(s []string) [5]int {
-	ints := [5]int{}
+func strings5(s []string) [5]string {
+	ints := [5]string{}
 	index := 0
 	for i := 0; i < len(s); i++ {
 		if s[i] == "" {
 			continue
 		}
-		mes, err := strconv.Atoi(s[i])
-		if err != nil {
-			log.Fatal(err)
-		}
 
-		ints[index] = mes
+		ints[index] = s[i]
 		index++
-	}
-	return ints
-}
-
-func stringsToInts(s []string) []int {
-	ints := []int{}
-	for i := 0; i < len(s); i++ {
-		mes, err := strconv.Atoi(s[i])
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		ints = append(ints, mes)
 	}
 	return ints
 }
