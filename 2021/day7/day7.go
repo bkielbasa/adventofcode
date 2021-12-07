@@ -17,8 +17,17 @@ func partA(input string) int {
 	craps := stringsToInts(strings.Split(input, ","))
 	min := 9999999999
 
+	ch := make(chan int, len(craps)-2)
+
 	for i := 2; i <= len(craps); i++ {
-		c := alignTo(craps, i)
+		go func(i int) {
+			ch <- alignTo(craps, i)
+		}(i)
+	}
+
+	for i := 2; i <= len(craps); i++ {
+		c := <-ch
+
 		if c < min {
 			min = c
 		}
