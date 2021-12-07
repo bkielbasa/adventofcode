@@ -27,6 +27,8 @@ func partA(input string) int {
 	return min
 }
 
+var results map[int]int
+
 func partB(input string) int {
 	craps := stringsToInts(strings.Split(input, ","))
 	min := 9999999999
@@ -57,9 +59,19 @@ func alignToB(craps []int, position int) int {
 	for _, crap := range craps {
 		moves := abs(position - crap)
 
-		for i := 1; i <= moves; i++ {
-			c += i
+		val, has := results[moves]
+		if has {
+			c += val
+			continue
 		}
+
+		sum := 0
+		for i := 1; i <= moves; i++ {
+			sum += i
+		}
+
+		results[moves] = sum
+		c += sum
 	}
 
 	return c
