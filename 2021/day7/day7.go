@@ -69,20 +69,7 @@ func alignToB(craps []int, position int) int {
 
 	for _, crap := range craps {
 		moves := abs(position - crap)
-
-		val := results[moves]
-		if val > 0 {
-			c += val
-			continue
-		}
-
-		sum := 0
-		for i := 1; i <= moves; i++ {
-			sum += i
-		}
-
-		results[moves] = sum
-		c += sum
+		c += int(float64(1+moves) / 2.0 * float64(moves))
 	}
 
 	return c
