@@ -33,10 +33,12 @@ func partA(input string) int {
 		}
 	}
 
+	close(ch)
+
 	return min
 }
 
-var results map[int]int
+var results []int
 
 func partB(input string) int {
 	craps := stringsToInts(strings.Split(input, ","))
@@ -68,8 +70,8 @@ func alignToB(craps []int, position int) int {
 	for _, crap := range craps {
 		moves := abs(position - crap)
 
-		val, has := results[moves]
-		if has {
+		val := results[moves]
+		if val > 0 {
 			c += val
 			continue
 		}

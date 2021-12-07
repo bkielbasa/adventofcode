@@ -31,7 +31,7 @@ func TestPartA_Big(t *testing.T) {
 func TestPartB_Small(t *testing.T) {
 	// given
 	expected := 168
-	results = map[int]int{}
+	results = make([]int, 2000)
 
 	// when
 	calc := partB(inputSmall)
@@ -45,7 +45,7 @@ func TestPartB_Small(t *testing.T) {
 func TestPartB_Big(t *testing.T) {
 	// given
 	expected := 104822130
-	results = map[int]int{}
+	results = make([]int, 2000)
 
 	// when
 	calc := partB(input)
@@ -59,8 +59,9 @@ func TestPartB_Big(t *testing.T) {
 var c int
 
 func BenchmarkPartB(b *testing.B) {
+	b.ReportAllocs()
+	results = make([]int, 2000)
 	for i := 0; i < b.N; i++ {
-		results = map[int]int{}
 		c = partB(input)
 	}
 }
