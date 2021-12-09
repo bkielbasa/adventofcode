@@ -17,7 +17,7 @@ func TestPartA(t *testing.T) {
 
 func TestPartA_Big(t *testing.T) {
 	// given
-	expected := 541
+	expected := 847504
 
 	// when
 	calc := partA(input, 100, 100)
@@ -43,7 +43,7 @@ func TestPartB(t *testing.T) {
 
 func TestPartB_Big(t *testing.T) {
 	// given
-	expected := 541
+	expected := 847504
 
 	// when
 	calc := partB(input, 100, 100)
@@ -51,5 +51,14 @@ func TestPartB_Big(t *testing.T) {
 	// then
 	if calc != expected {
 		t.Errorf("expected %d but %d calculated", expected, calc)
+	}
+}
+
+var c int
+
+func BenchmarkPartB(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		c = partB(input, 100, 100)
 	}
 }

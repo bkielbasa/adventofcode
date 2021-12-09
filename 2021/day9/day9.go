@@ -13,7 +13,7 @@ var inputSmall string
 var input string
 
 type board struct {
-	m       [][]int
+	m       []string
 	sizeX   int
 	sizeY   int
 	visited [][]bool
@@ -69,18 +69,15 @@ func partA(input string, sizex, sizey int) int {
 
 func partB(input string, sizex, sizey int) int {
 	visited := make([][]bool, sizex)
-	matrix := make([][]int, sizex)
+	matrix := make([]string, sizex)
 	for i := range matrix {
-		matrix[i] = make([]int, sizey)
 		visited[i] = make([]bool, sizey)
 	}
 
 	lines := strings.Split(input, "\n")
 
 	for x := 0; x < sizex; x++ {
-		for y := 0; y < sizey; y++ {
-			matrix[x][y] = int(lines[x][y]) - 48
-		}
+		matrix[x] = lines[x]
 	}
 
 	b := board{m: matrix, visited: visited, sizeX: sizex, sizeY: sizey}
@@ -124,7 +121,7 @@ func partB(input string, sizex, sizey int) int {
 }
 
 func (b *board) calcBasinSize(x, y int) int {
-	if b.m[x][y] == 9 {
+	if b.m[x][y] == '9' {
 		return 0
 	}
 
