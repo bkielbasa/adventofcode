@@ -17,7 +17,7 @@ func TestPartA(t *testing.T) {
 
 func TestPartA_Big(t *testing.T) {
 	// given
-	expected := 847504
+	expected := 265527
 
 	// when
 	calc := partA(input)
@@ -43,7 +43,7 @@ func TestPartB(t *testing.T) {
 
 func TestPartB_Big(t *testing.T) {
 	// given
-	expected := 288957
+	expected := 3969823589
 
 	// when
 	calc := partB(input)
