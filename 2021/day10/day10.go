@@ -26,11 +26,15 @@ func partA(input string) int {
 func partB(input string) int {
 	scores := []int{}
 
-	lines := strings.Split(input, "\n")
-	for _, line := range lines {
-		s := calcLineIncompleteScore(line)
-		if s != 0 {
-			scores = append(scores, s)
+	i1 := 0
+	for i := range input {
+		if input[i] == '\n' {
+			s := calcLineIncompleteScore(input[i1:i])
+			if s != 0 {
+				scores = append(scores, s)
+			}
+
+			i1 = i + 1
 		}
 	}
 
