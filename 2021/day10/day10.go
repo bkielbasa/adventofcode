@@ -51,7 +51,8 @@ func calcLineIncompleteScore(line string) int {
 		'<': 4,
 	}
 
-	openChars := make([]byte, 0)
+	openChars := make([]byte, len(line))
+	pos := -1
 
 	for i := range line {
 		switch line[i] {
@@ -62,33 +63,39 @@ func calcLineIncompleteScore(line string) int {
 		case '{':
 			fallthrough
 		case '<':
-			openChars = append(openChars, line[i])
+			pos++
+			openChars[pos] = line[i]
+			// openChars = append(openChars, line[i])
 			continue
 		}
 
-		lastChar := openChars[len(openChars)-1]
+		lastChar := openChars[pos]
 
 		switch line[i] {
 		case ')':
 			if lastChar != '(' {
 				return 0
 			}
-			openChars = openChars[:len(openChars)-1]
+			pos--
+			// openChars = openChars[:len(openChars)-1]
 		case ']':
 			if lastChar != '[' {
 				return 0
 			}
-			openChars = openChars[:len(openChars)-1]
+			// openChars = openChars[:len(openChars)-1]
+			pos--
 		case '}':
 			if lastChar != '{' {
 				return 0
 			}
-			openChars = openChars[:len(openChars)-1]
+			// openChars = openChars[:len(openChars)-1]
+			pos--
 		case '>':
 			if lastChar != '<' {
 				return 0
 			}
-			openChars = openChars[:len(openChars)-1]
+			// openChars = openChars[:len(openChars)-1]
+			pos--
 		}
 	}
 
