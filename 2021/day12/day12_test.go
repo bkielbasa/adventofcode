@@ -53,3 +53,12 @@ func TestPartB_Big(t *testing.T) {
 		t.Errorf("expected %d but %d calculated", expected, calc)
 	}
 }
+
+var c int
+
+func BenchmarkPartB(b *testing.B) {
+	b.ReportAllocs()
+	for i := 0; i < b.N; i++ {
+		c = partB(input)
+	}
+}

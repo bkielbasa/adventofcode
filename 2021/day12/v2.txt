@@ -1,0 +1,11 @@
+goos: darwin
+goarch: amd64
+pkg: github.com/bkielbasa/adventofcode/2021/day12
+cpu: Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz
+BenchmarkPartB-12    	      19	  61490148 ns/op	    7916 B/op	      59 allocs/op
+BenchmarkPartB-12    	      19	  60783761 ns/op	    8140 B/op	      58 allocs/op
+BenchmarkPartB-12    	      19	  60798560 ns/op	    6687 B/op	      58 allocs/op
+BenchmarkPartB-12    	      19	  60469085 ns/op	    8693 B/op	      59 allocs/op
+BenchmarkPartB-12    	      19	  60906606 ns/op	    7053 B/op	      58 allocs/op
+PASS
+ok  	github.com/bkielbasa/adventofcode/2021/day12	7.499s

@@ -83,7 +83,6 @@ func (c caves) countPaths2(current string, visited map[string]int, doubleUsed bo
 	}
 
 	visited[current]++
-
 	var pathsToEnd int
 
 	for visitable := range c[current] {
@@ -91,7 +90,7 @@ func (c caves) countPaths2(current string, visited map[string]int, doubleUsed bo
 			continue
 		}
 
-		if strings.ToUpper(visitable) != visitable && visited[visitable] > 0 {
+		if isLower(visitable[0]) && visited[visitable] > 0 {
 			if doubleUsed {
 				continue
 			} else {
@@ -102,10 +101,14 @@ func (c caves) countPaths2(current string, visited map[string]int, doubleUsed bo
 		pathsToEnd += c.countPaths2(visitable, visited, doubleUsed)
 
 		visited[visitable]--
-		if strings.ToUpper(visitable) != visitable && visited[visitable] == 1 {
+		if isLower(visitable[0]) && visited[visitable] == 1 {
 			doubleUsed = false
 		}
 	}
 
 	return pathsToEnd
+}
+
+func isLower(b byte) bool {
+	return b >= 'a' && b <= 'z'
 }
