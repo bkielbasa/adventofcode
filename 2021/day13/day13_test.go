@@ -8,7 +8,10 @@ func TestPartA(t *testing.T) {
 █   █
 █   █
 █   █
-█████`
+█████
+     
+     
+`
 
 	// when
 	calc := partA(inputSmall, 11, 15)
@@ -27,7 +30,7 @@ func TestPartA_Big(t *testing.T) {
 █  █ █  █ ████   █  █  █ █    █  █ ████ 
 ████ ███  █  █  █   ███  █    █  █ █  █ 
 █  █ █ █  █  █ █    █    █  █ █  █ █  █ 
-█  █ █  █ █  █ ████ █     ██   ██  █  █
+█  █ █  █ █  █ ████ █     ██   ██  █  █ 
 `
 
 	// when
@@ -36,5 +39,13 @@ func TestPartA_Big(t *testing.T) {
 	// then
 	if calc != expected {
 		t.Errorf("expected \n%s \n\nbut \n%s \ncalculated", expected, calc)
+	}
+}
+
+var c string
+
+func Benchmark(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		c = partA(input, 1311, 895)
 	}
 }
