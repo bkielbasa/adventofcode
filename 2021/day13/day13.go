@@ -2,7 +2,6 @@ package day13
 
 import (
 	_ "embed"
-	"fmt"
 	"strconv"
 	"strings"
 )
@@ -41,51 +40,27 @@ func partA(in string, maxX, maxY int) string {
 		foldSize := strToInt(f[1])
 
 		if f[0] == "y" {
-			m2 := make([][]bool, maxX)
-			// copy existing
-			for x := 0; x < maxX; x++ {
-				m2[x] = make([]bool, foldSize)
-
-				for y := 0; y < foldSize; y++ {
-					m2[x][y] = m[x][y]
-				}
-			}
-
 			// folding
-
 			for x := range m {
 				for y := foldSize; y < maxY; y++ {
 					if m[x][y] {
-						m2[x][maxY-y-1] = m[x][y]
+						m[x][maxY-y-1] = m[x][y]
 					}
 				}
 			}
 
 			maxY = foldSize
-			m = m2
 		} else {
-			m2 := make([][]bool, foldSize)
-			// copy existing
-			for x := 0; x < foldSize; x++ {
-				m2[x] = make([]bool, maxY)
-
-				for y := 0; y < maxY; y++ {
-					m2[x][y] = m[x][y]
-				}
-			}
-
 			// folding
-
 			for x := foldSize; x < maxX; x++ {
 				for y := 0; y < maxY; y++ {
 					if m[x][y] {
-						m2[maxX-x-1][y] = m[x][y]
+						m[maxX-x-1][y] = m[x][y]
 					}
 				}
 			}
 
 			maxX = foldSize
-			m = m2
 		}
 	}
 
@@ -107,22 +82,6 @@ func stringify(m [][]bool, maxX, maxY int) string {
 	}
 
 	return s
-}
-
-func printMatrix(m [][]bool, maxX, maxY int) {
-	for y := 0; y < maxY; y++ {
-		for x := 0; x < maxX; x++ {
-			if m[x][y] {
-				fmt.Print("█")
-			} else {
-				fmt.Print(" ")
-			}
-		}
-
-		fmt.Println()
-	}
-
-	fmt.Println()
 }
 
 func strToInt(str string) int {
